@@ -231,7 +231,17 @@ namespace C44_G02_EFCore03
 
             #endregion
 
+            #region Local and remote 
 
+            //local
+            var localemp = context.Employees.Local.FirstOrDefault(x => x.Id == 2);
+            if (localemp is null)
+            {
+                 localemp = context.Employees.FirstOrDefault(x => x.Id == 2);
+            }
+
+            #endregion
+            var empfind = context.Employees.Find(2);
 
             Console.ReadLine(); 
         }
