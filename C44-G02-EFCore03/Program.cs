@@ -285,7 +285,10 @@ namespace C44_G02_EFCore03
             #endregion
 
             #region Mapping View
-
+            foreach (var emp in context.departmetEmployeeView)
+            {
+                //Console.WriteLine(emp);
+            }
 
 
 

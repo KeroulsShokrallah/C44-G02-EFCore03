@@ -12,6 +12,7 @@ namespace C44_G02_EFCore03.Context
     {
        public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<DepartmetEmployeeView> departmetEmployeeView { get; set; }
         //public DbSet<PartTimeEmployee> PartTimeEmployees { get; set; }
         //public DbSet<FullTimeEmploee> FullTimeEmploees { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -22,6 +23,7 @@ namespace C44_G02_EFCore03.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DepartmetEmployeeView>().HasNoKey().ToView("departmetEmployeeView");
             //modelBuilder.Entity<FullTimeEmploee>()
             //    .HasBaseType<Employee>()
             //    .HasDiscriminator<string>("Type Of Employee")
