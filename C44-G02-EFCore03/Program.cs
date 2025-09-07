@@ -1,6 +1,8 @@
 ﻿using C44_G02_EFCore03.Context;
 using C44_G02_EFCore03.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 using System.Text.Json;
 
 namespace C44_G02_EFCore03
@@ -240,8 +242,73 @@ namespace C44_G02_EFCore03
                  localemp = context.Employees.FirstOrDefault(x => x.Id == 2);
             }
 
-            #endregion
             var empfind = context.Employees.Find(2);
+            #endregion
+
+
+            #region Joins
+
+            var result = from Employee in context.Employees
+                         join Department in context.Departments
+                         on Employee.DepartmentId equals Department.Id
+                         select new
+                         {
+                             EmployeeName = Employee.Name,
+                             DepartmentName = Department.Name
+                         };
+            foreach (var emp in result)
+            {
+                //Console.WriteLine(emp );
+            }
+            var resultFluent = context.Departments.Join(context.Employees , d=> d.Id, e=> e.DepartmentId , (d, e) => new
+            {
+                EmployeeName = e.Name,
+                DepartmentName = d.Name
+            });
+
+            foreach (var emp in resultFluent)
+            {
+               // Console.WriteLine(emp);
+            }
+
+            var resultGroupJoin = context.Employees.GroupJoin(context.Employees , d=> d.Id,e=> e.DepartmentId , (d, e) => new
+            {
+                department = d,
+                employee = e
+            }).ToList();
+            //var resultLeftJoin = context.Employees.LeftJoin(context.Employees, d => d.Id, e => e.DepartmentId, (d, e) => new
+            //{
+            //    department = d,
+            //    employee = e
+            //}).ToList();
+
+            #endregion
+
+            #region Mapping View
+
+
+
+
+
+
+
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             Console.ReadLine(); 
         }
